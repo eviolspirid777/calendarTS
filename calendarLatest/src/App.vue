@@ -1,7 +1,4 @@
 <template>
-  <header></header>
-  <main></main>
-  <footer></footer>   <!--Распихай по блокам хедеры, main и футеры-->
   <div :class="['top--class', isDarkTheme ? 'light' : 'dark']">
     <h1 class="myowntext">Тестовое задание</h1>
     <div class="calendarbox">
