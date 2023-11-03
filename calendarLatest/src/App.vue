@@ -1,8 +1,12 @@
 <template>
+  <header></header>
+  <main></main>
+  <footer></footer>   <!--Распихай по блокам хедеры, main и футеры-->
   <div :class="['top--class', isDarkTheme ? 'light' : 'dark']">
     <h1 class="myowntext">Тестовое задание</h1>
-      <ownswitcher @chngcolor="changeTheme()"/>
+    
     <div class="calendarbox">
+      <ownswitcher @chngcolor="changeTheme()"/>
       <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
       <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
       <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
@@ -97,6 +101,11 @@ img[src*="calendar_photo"]{
   float: left;
   margin-top: 0px;
 }
+@media(max-width:1220px){
+  img[src*="calendar_photo"]{
+    display: none;
+  }
+}
 .myowntext{
   padding-left: 60px;
   padding-top: 90px;
@@ -136,6 +145,10 @@ button{
   max-height: 60px;
   width: 400px;
   font-size: 40px;
+  @media (max-width:1220px) {
+    top: 740px;
+    margin-bottom: 700px;
+  }
   & .black {
     background-color: black;
     width: 120px;
@@ -182,11 +195,9 @@ h1{
   margin-top: 40px;
 }
 .switch{ 
-  position: absolute;
-  top: 35px;
-  left: 810px;
+  display: flex;
+  justify-content: flex-start;
   font-size: 14px;
-  display: inline-block;
   width: 3.5em;
   height: 2em;
   & input{
@@ -199,13 +210,19 @@ h1{
 .slider{
   position: absolute;
   cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  margin-top: -70px;
+  margin-left: 1700px;
+  height: 30px;
+  width:50px;
   background-color: rgba(255, 255, 255, 0.644);
   transition: .2s;
   border-radius: 30px;
+  @media (max-width: 1220px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0px;
+    margin-top: -10px;
+  }
   &::before{
     position: absolute;
     content: "";
@@ -228,13 +245,21 @@ input:checked + .slider::before{
 }
 .calendarbox{
   display: flex;
-  padding-left: 30px;
+  padding-left: 65px;
   padding-top: 60px;
+  @media (max-width:1220px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
   & .calend{
+    @media (max-width:1220px) {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
     overflow: hidden;
-    max-height: 270px;
-    width: 250px;
-    margin-left: 30px;
+    height: 290px;
+    width: 300px;
+    margin-right: 130px;
     box-shadow: 0px 0px 10px rgba(235, 233, 245, 0.733);
     &.light{
         transition: box-shadow 0.2s ease-in-out;

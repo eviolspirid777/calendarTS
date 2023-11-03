@@ -190,7 +190,7 @@ body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
     background: white;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-weight: 400;
-    font-size: 30px;
+    font-size: 32px;
     padding-bottom: 10px;
     &.dark{
         background-color: rgb(46, 54, 71);
