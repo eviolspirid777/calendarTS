@@ -4,7 +4,6 @@
   <footer></footer>   <!--Распихай по блокам хедеры, main и футеры-->
   <div :class="['top--class', isDarkTheme ? 'light' : 'dark']">
     <h1 class="myowntext">Тестовое задание</h1>
-    
     <div class="calendarbox">
       <ownswitcher @chngcolor="changeTheme()"/>
       <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
@@ -35,43 +34,42 @@ import { type Day } from "../src/types/OwnDays"
 const isDarkTheme = ref(false);
 const currentTheme = ref("black");
 const owndays = ref([
-  {day:"1",active:true},
-  {day:"2",active:true},
-  {day:"3",active:true},
-  {day:"4",active:true},
-  {day:"5",active:true},
-  {day:"6",active:true},
-  {day:"7",active:true},
-  {day:"8",active:true},
-  {day:"9",active:true},
-  {day:"10",active:true},
-  {day:"11",active:true},
-  {day:"12",active:true},
-  {day:"13",active:true},
-  {day:"14",active:true},
-  {day:"15",active:true},
-  {day:"16",active:true},
-  {day:"17",active:true},
-  {day:"18",active:true},
-  {day:"19",active:true},
-  {day:"20",active:true},
-  {day:"21",active:true},
-  {day:"22",active:true},
-  {day:"23",active:true},
-  {day:"24",active:true},
-  {day:"25",active:true},
-  {day:"26",active:true},
-  {day:"27",active:true},
-  {day:"28",active:true},
-  {day:"29",active:true},
-  {day:"30",active:true},
-  {day:"31",active:true},
-  {day:"1",active:false},
-  {day:"2",active:false},
-  {day:"3",active:false},
-  {day:"4",active:false},
-  ])
-
+  {day:"1", active:true},
+  {day:"2", active:true},
+  {day:"3", active:true},
+  {day:"4", active:true},
+  {day:"5", active:true},
+  {day:"6", active:true},
+  {day:"7", active:true},
+  {day:"8", active:true},
+  {day:"9", active:true},
+  {day:"10", active:true},
+  {day:"11", active:true},
+  {day:"12", active:true},
+  {day:"13", active:true},
+  {day:"14", active:true},
+  {day:"15", active:true},
+  {day:"16", active:true},
+  {day:"17", active:true},
+  {day:"18", active:true},
+  {day:"19", active:true},
+  {day:"20", active:true},
+  {day:"21", active:true},
+  {day:"22", active:true},
+  {day:"23", active:true},
+  {day:"24", active:true},
+  {day:"25", active:true},
+  {day:"26", active:true},
+  {day:"27", active:true},
+  {day:"28", active:true},
+  {day:"29", active:true},
+  {day:"30", active:true},
+  {day:"31", active:true},
+  {day:"1", active:false},
+  {day:"2", active:false},
+  {day:"3", active:false},
+  {day:"4", active:false},
+])
 
 const month = ref("");
 
