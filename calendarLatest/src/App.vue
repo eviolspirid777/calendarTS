@@ -1,17 +1,21 @@
 <template>
   <div :class="['top--class', isDarkTheme ? 'light' : 'dark']">
-    <h1 class="myowntext">Тестовое задание</h1>
-    <div class="calendarbox">
+    <header>
+      <h1 class="myowntext">Тестовое задание</h1>
       <ownswitcher @chngcolor="changeTheme()"/>
-      <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
-      <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
-      <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
-    </div>
-    <div class="container">
-      <ownspan @send-month="defineCalendar" />
-    </div>
+    </header>
+    <main>
+      <div class="calendarbox">
+        <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
+        <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
+        <owncalendar :stl="sendColor()" :class="['calend', isDarkTheme ? 'light':'dark']" :calendardays="owndays" :month="month"/>
+      </div>
+      <div class="container">
+        <ownspan @send-month="defineCalendar" />
+      </div>
+    </main>
   </div>
-  <div>
+  <footer>
     <img src="../public/calendar_photo.png"/>
     <div class="header--class">
       <div class="black"></div>
@@ -19,7 +23,7 @@
       <div class="pink"></div>
     </div>
       <label class="text-form">Платформа управления геопространственными данными «Геопаспорт» - это иновационный продукт, представляющий собой набор программных решений и позволяющий создавать современное прикладное программное обеспечение в области управления данными территории или регион. <br/>Программа включена в единый реестр Российских программ для ЭВМ и баз данных</label>
-  </div>
+  </footer>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
@@ -84,6 +88,66 @@ const sendColor = () => {
 }
 </script>
 <style lang="scss">
+header{
+  display: flex;
+  flex-flow: column wrap;
+  width: 1800px;
+}
+.switch{ 
+  display: flex;
+  justify-content: flex-start;
+  margin-left: -525px;
+  margin-top: 60px;
+  padding-right: 700px;
+  font-size: 14px;
+  width: 3.5em;
+  height: 2em;
+  & input{
+    display: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  @media (max-width: 1220px) {
+    margin-left: 0;
+  }
+}
+.slider{
+  position: absolute;
+  cursor: pointer;
+  margin-top: -70px;
+  margin-left: 1700px;
+  height: 30px;
+  width:50px;
+  background-color: rgba(255, 255, 255, 0.644);
+  transition: .2s;
+  border-radius: 30px;
+  @media (max-width: 1220px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 60px;
+    margin-top: -10px;
+  }
+  &::before{
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    left: 0.3em;
+    bottom: 0.3em;
+    background: linear-gradient(40deg,#ff0080,#ff8c00 70%);
+    transition: .4s;
+  }
+}
+input:checked + .slider{
+  background: #303136;
+}
+input:checked + .slider::before{
+  transform: translateX(1.5em);
+  background: #303136;
+  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -5px 0 0 #a3dafb;
+}
 .container{
   position: relative;
   top: 40px;
@@ -95,9 +159,7 @@ img[src*="calendar_photo"]{
   width: 600px;
   float: left;
   margin-top: 0px;
-}
-@media(max-width:1220px){
-  img[src*="calendar_photo"]{
+  @media (max-width:1220px) {
     display: none;
   }
 }
@@ -119,7 +181,7 @@ button{
   align-items: baseline;
   vertical-align: baseline;
   width: 110%;
-  height: 550px;
+  height: 700px;
   &.dark{
     color: rgb(207,215,225);
     background-color: rgb(46, 54, 71);
@@ -127,6 +189,9 @@ button{
   &.light{
     background-color: rgba(255, 255, 255, 0.952);
     color: rgb(64,64,64);
+  }
+  @media (max-width:1220px) {
+    height: 1350px;
   }
 }
 .header--class {
@@ -141,7 +206,7 @@ button{
   width: 400px;
   font-size: 40px;
   @media (max-width:1220px) {
-    top: 740px;
+    top: 70px;
     margin-bottom: 700px;
   }
   & .black {
@@ -182,61 +247,15 @@ button{
   font-weight: 100;
   color: white;
   font-size: 23px;
+  @media (max-width:1220px) {
+    top: -600px;
+  }
 }
 h1{
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 30px;
   margin-left: 25px;
   margin-top: 40px;
-}
-.switch{ 
-  display: flex;
-  justify-content: flex-start;
-  font-size: 14px;
-  width: 3.5em;
-  height: 2em;
-  & input{
-    display: none;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-}
-.slider{
-  position: absolute;
-  cursor: pointer;
-  margin-top: -70px;
-  margin-left: 1700px;
-  height: 30px;
-  width:50px;
-  background-color: rgba(255, 255, 255, 0.644);
-  transition: .2s;
-  border-radius: 30px;
-  @media (max-width: 1220px) {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 0px;
-    margin-top: -10px;
-  }
-  &::before{
-    position: absolute;
-    content: "";
-    height: 1.4em;
-    width: 1.4em;
-    border-radius: 20px;
-    left: 0.3em;
-    bottom: 0.3em;
-    background: linear-gradient(40deg,#ff0080,#ff8c00 70%);
-    transition: .4s;
-  }
-}
-input:checked + .slider{
-  background: #303136;
-}
-input:checked + .slider::before{
-  transform: translateX(1.5em);
-  background: #303136;
-  box-shadow: inset -3px -2px 5px -2px #8983f7, inset -10px -5px 0 0 #a3dafb;
 }
 .calendarbox{
   display: flex;
@@ -245,6 +264,7 @@ input:checked + .slider::before{
   @media (max-width:1220px) {
     flex-direction: column;
     align-items: flex-start;
+    padding-top: 20px;
   }
   & .calend{
     @media (max-width:1220px) {
