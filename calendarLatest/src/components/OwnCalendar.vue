@@ -1,40 +1,40 @@
 <template>
-    <div :class="['main--form', clsStyle()]">
+    <div :class="['main--form', currentTheme]">
         <div class="month">      
-        <ul>
-            <li class="prev">&#171;</li>
-            <li class="prev">&#8249;</li>
-            <li class="next">&#187;</li>
-            <li class="next">&#8250;</li>
-            <li class="header">
-            {{ Object.keys(mnth).length === 0 ? "март" : mnth}}
-            <span>2021</span>
-            </li>
-        </ul>
+            <ul>
+                <li class="prev">&#171;</li>
+                <li class="prev">&#8249;</li>
+                <li class="next">&#187;</li>
+                <li class="next">&#8250;</li>
+                <li class="header">
+                {{ Object.keys(mnth).length === 0 ? "март" : mnth}}
+                <span>2021</span>
+                </li>
+            </ul>
         </div>
-
-        <ul :class="['weekdays', clsStyle()]">
-        <li>пн</li>
-        <li>вт</li>
-        <li>ср</li>
-        <li>чт</li>
-        <li>пт</li>
-        <li>сб</li>
-        <li>вс</li>
+        <ul class="weekdays">
+            <li>пн</li>
+            <li>вт</li>
+            <li>ср</li>
+            <li>чт</li>
+            <li>пт</li>
+            <li>сб</li>
+            <li>вс</li>
         </ul>
-        <ul :class="['days', clsStyle()]">
-            <li v-for="(day,key) in owndays" :key="key">
-                <span :class="['active', day.active ? 'act' : 'inact']">{{ day.day }}</span>
+        <ul class="days">
+            <li v-for="(day,key) in days" :key="key">
+                <span :class="['active', day.active ? 'active' : 'inactive']">{{ day.day }}</span>
             </li>
         </ul>
     </div>
 </template>
+
 <script lang="ts" setup>
 import { watch, ref, type PropType } from 'vue';
-import {type Day} from "../types/OwnDays";
+import { useDaysStore } from '@/stores/daysStore';
 
 const props = defineProps({
-    stl: {
+    theme: {
         type: String,
         required: false,
         default:"light"
@@ -44,93 +44,67 @@ const props = defineProps({
         required: true,
         default: () => "Март"
     },
-    calendardays:{
-        type: Array as PropType<Day[]>,
-        required: true,
-        default: () => [
-            {day:"1",active:true},
-            {day:"2",active:true},
-            {day:"3",active:true},
-            {day:"4",active:true},
-            {day:"5",active:true},
-            {day:"6",active:true},
-            {day:"7",active:true},
-            {day:"8",active:true},
-            {day:"9",active:true},
-            {day:"10",active:true},
-            {day:"11",active:true},
-            {day:"12",active:true},
-            {day:"13",active:true},
-            {day:"14",active:true},
-            {day:"15",active:true},
-            {day:"16",active:true},
-            {day:"17",active:true},
-            {day:"18",active:true},
-            {day:"19",active:true},
-            {day:"20",active:true},
-            {day:"21",active:true},
-            {day:"22",active:true},
-            {day:"23",active:true},
-            {day:"24",active:true},
-            {day:"25",active:true},
-            {day:"26",active:true},
-            {day:"27",active:true},
-            {day:"28",active:true},
-            {day:"29",active:true},
-            {day:"30",active:true},
-            {day:"31",active:true},
-            {day:"1",active:false},
-            {day:"2",active:false},
-            {day:"3",active:false},
-            {day:"4",active:false},
-        ]
-    }
 })
 
-const clr = ref(props.stl);
+const store = useDaysStore();
+
+const currentTheme = ref(props.theme);
 const mnth = ref(props.month);
-const owndays = ref(props.calendardays);
+const days = ref(store.dictionary['март']);
 
-const clsStyle = () => {
-    return clr.value === "light" ? "light" : "dark";
-}
-
-watch(() => props.calendardays, (newVal) => {
-  owndays.value = newVal;
-})
-watch(() => props.stl, (newVal) => {
-  clr.value = newVal === "light" ? "light" : "dark";
+watch(() => props.theme, (newVal) => {
+    currentTheme.value = newVal;
+    if(newVal === "black"){
+        document.documentElement.style.setProperty("--color","rgb(207,215,225)")
+        document.documentElement.style.setProperty("--bg-color","rgb(46, 54, 71)")
+    }
+    else {
+        document.documentElement.style.setProperty("--color","rgb(64,64,64)")
+        document.documentElement.style.setProperty("--bg-color","rgba(255, 255, 255, 0.952)")
+    }
 });
 
-watch(() => props.month, (newVal) => {
+watch(() => props.month, (newVal:any) => {
   mnth.value = newVal;
+  days.value = store.dictionary[newVal];
 });
 </script>
+
 <style scoped lang="scss">
+:root{
+  --color: rgb(207,215,225);
+  --bg-color: rgb(46, 54, 71);
+}
+
 * {box-sizing: border-box;}
 ul {list-style-type: none;}
 body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
 
 .main--form{
-    &.dark{
-        background-color: rgb(46, 54, 71);
-        color: white;
+    @media (max-width: 1240px) {
+      margin-top: 20px;
+      margin-bottom: 20px;
     }
+    overflow: hidden;
+    height: 290px;
+    width: 300px;
+    margin-right: 130px;
+    box-shadow: 0px 0px 10px rgba(235, 233, 245, 0.733);
     &.light{
-        color: black;
-        background-color: white;
+        color: var(--color);
+        background-color: var(--bg-color);
+        transition: box-shadow 0.2s ease-in-out;
+        box-shadow: 0px 0px 10px rgba(55, 52, 68, 0.733);
+    }
+    &.dark{
+        background-color: var(--bg-color);
+        color: var(--color);
     }
 }
 
 .header{
     padding-top: 5px;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-.rght{
-    margin-right: 9px;
-}
-.lft{
-    margin-left: 9px;
 }
 
 .month {
@@ -167,14 +141,8 @@ body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
     margin: 0;
     padding: 3px 0;
     background-color: white;
-    &.dark{
-        background-color: rgb(46, 54, 71);
-        color: white;
-    }
-    &.light{
-        background-color: white;
-        color: black;
-    }
+    background-color: var(--bg-color);
+    color: var(--color);
 }
 
 .weekdays li {
@@ -192,14 +160,8 @@ body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
     font-weight: 400;
     font-size: 32px;
     padding-bottom: 10px;
-    &.dark{
-        background-color: rgb(46, 54, 71);
-        color: white;
-    }
-    &.light{
-        background-color: white;
-        color: black;
-    }
+    background-color: var(--bg-color);
+    color: var(--color);
 }
 .days li {
     list-style-type: none;
@@ -210,26 +172,17 @@ body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
     font-size:13px;
 }
 
-.days li .active {                  //Для обозачения текущего дня (ex: li<span>10</span>/li)
-    &.inact{
-        color: gray;
-    }
+.days li .active {
     &:hover{
         color: rgb(103, 78, 216);
-        cursor: default;
+        cursor: pointer;
     }
 }
-
-@media screen and (max-width:720px) {
-    .weekdays li, .days li {width: 13.1%;}
-}
-
-@media screen and (max-width: 420px) {
-    .weekdays li, .days li {width: 12.5%;}
-    .days li .active {padding: 2px;}
-}
-
-@media screen and (max-width: 290px) {
-    .weekdays li, .days li {width: 12.2%;}
+.days li .inactive {
+    color: gray;
+    &:hover{
+        color: gray;
+        cursor: not-allowed;
+    }
 }
 </style>
