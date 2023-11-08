@@ -1,7 +1,7 @@
 <template>
-    <span @click="selectedTag(`март`)">Март</span>
-    <span @click="selectedTag(`апрель`)">Апрель</span>
-    <span @click="selectedTag(`май`)">Май</span>
+    <span @click="selectedTag(0)">Март</span>
+    <span @click="selectedTag(1)">Апрель</span>
+    <span @click="selectedTag(2)">Май</span>
 </template>
 <script setup lang="ts">
 import {ref} from "vue"
@@ -9,24 +9,12 @@ import { useDaysStore } from "../stores/daysStore"
 
 let store = useDaysStore()
 
-const emits = defineEmits(["sendMonth"]);
-
-const newdays = ref([{}]);
-
-const selectedTag = (tag: String) => {
-  if(tag === "март")
-  {
-    newdays.value = store.dictionary["март"];
-  }
-  else if(tag === "апрель")
-  {
-    newdays.value = store.dictionary["апрель"]
-  }
-  else if(tag === "май")
-  {
-    newdays.value = store.dictionary["май"]
-  }
-  emits("sendMonth", tag);
+const selectedTag = (tag: number) => {
+  console.log("было:")
+  console.log(store.currentMonth)
+  store.currentMonth = store.MONTHS_LABELS[tag]
+  console.log("сейчас:")
+  console.log(store.currentMonth)
 }
 </script>
 <style lang="scss" scoped>

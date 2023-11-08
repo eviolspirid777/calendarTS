@@ -1,5 +1,5 @@
 <template>
-    <div :class="['main--form', currentTheme]">
+    <div :class="['main-form', currentTheme]">
         <div class="month">      
             <ul>
                 <li class="prev">&#171;</li>
@@ -7,7 +7,7 @@
                 <li class="next">&#187;</li>
                 <li class="next">&#8250;</li>
                 <li class="header">
-                {{ Object.keys(mnth).length === 0 ? "март" : mnth}}
+                {{ month }}
                 <span>2021</span>
                 </li>
             </ul>
@@ -30,7 +30,9 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, ref, type PropType } from 'vue';
+import _ from "lodash";
+
+import { watch, ref, type PropType, type Ref } from 'vue';
 import { useDaysStore } from '@/stores/daysStore';
 
 const props = defineProps({
@@ -39,35 +41,27 @@ const props = defineProps({
         required: false,
         default:"light"
     },
-    month:{
-        type: String,
-        required: true,
-        default: () => "Март"
-    },
 })
 
 const store = useDaysStore();
 
 const currentTheme = ref(props.theme);
-const mnth = ref(props.month);
-const days = ref(store.dictionary['март']);
+const month = ref(store.currentMonth);
+
+const days = ref(store.dictionary[store.currentMonthIndex]);
 
 watch(() => props.theme, (newVal) => {
     currentTheme.value = newVal;
-    if(newVal === "black"){
-        document.documentElement.style.setProperty("--color","rgb(207,215,225)")
-        document.documentElement.style.setProperty("--bg-color","rgb(46, 54, 71)")
-    }
-    else {
-        document.documentElement.style.setProperty("--color","rgb(64,64,64)")
-        document.documentElement.style.setProperty("--bg-color","rgba(255, 255, 255, 0.952)")
-    }
 });
 
-watch(() => props.month, (newVal:any) => {
-  mnth.value = newVal;
-  days.value = store.dictionary[newVal];
-});
+watch(month, (newMonth: any) => {
+    month.value = newMonth;
+})
+
+// watch(() => props.month, (newVal:string) => {
+//   mnth.value = newVal;
+//   days.value = _.get(store.dictionary, newVal);
+// });
 </script>
 
 <style scoped lang="scss">
@@ -80,7 +74,7 @@ watch(() => props.month, (newVal:any) => {
 ul {list-style-type: none;}
 body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
 
-.main--form{
+.main-form{
     @media (max-width: 1240px) {
       margin-top: 20px;
       margin-bottom: 20px;
@@ -90,15 +84,13 @@ body {font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
     width: 300px;
     margin-right: 130px;
     box-shadow: 0px 0px 10px rgba(235, 233, 245, 0.733);
+
+    color: var(--color);
+    background-color: var(--bg-color);
+
     &.light{
-        color: var(--color);
-        background-color: var(--bg-color);
         transition: box-shadow 0.2s ease-in-out;
         box-shadow: 0px 0px 10px rgba(55, 52, 68, 0.733);
-    }
-    &.dark{
-        background-color: var(--bg-color);
-        color: var(--color);
     }
 }
 

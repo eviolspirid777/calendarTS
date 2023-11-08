@@ -1,23 +1,23 @@
 <template>
-  <div class="top--class">
+  <div :style="themeStyle" class="top-class">
     <header>
       <h1 class="myowntext">Тестовое задание</h1>
       <OwnSwitcher @change-color="changeColor()"/>
     </header>
     <main>
       <div class="calendarbox">
-        <OwnCalendar :theme="currentTheme" :month="month"/>
-        <OwnCalendar :theme="currentTheme" :month="month"/>
-        <OwnCalendar :theme="currentTheme" :month="month"/>
+        <OwnCalendar :theme="currentTheme"/>
+        <OwnCalendar :theme="currentTheme"/>
+        <OwnCalendar :theme="currentTheme"/>
       </div>
       <div class="container">
-        <OwnSpan @send-month="setMonth" />
+        <OwnSpan />
       </div>
     </main>
   </div>
   <footer>
-    <img src="../public/calendar_photo.png"/>
-    <div class="header--class">
+    <img src="calendar_photo.png"/>
+    <div class="header-class">
       <div class="black"></div>
       <h1>ЗАГОЛОВОК</h1>
       <div class="pink"></div>
@@ -27,29 +27,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import OwnCalendar from '@/components/OwnCalendar.vue'
 import OwnSpan from '@/assets/OwnSpan.vue';
 import OwnSwitcher from './assets/OwnSwitcher.vue';
 
 const currentTheme = ref("black");
 
-const month = ref("");
 
-const setMonth = (currentMonth:string) => {
-  month.value = currentMonth;
-}
+const themeStyle = computed(() => {
+  if(currentTheme.value === "black"){
+    return {
+      "--color": "rgb(207,215,225)",
+      "--bg-color": "rgb(46, 54, 71)"
+    }
+  }
+
+  return {
+    "--color": "rgb(64,64,64)",
+    "--bg-color": "rgba(255, 255, 255, 0.952)"
+  }
+})
 
 const changeColor = () => {
   currentTheme.value =  currentTheme.value == "black" ? "light" : "black";
-  if(currentTheme.value === "black"){
-    document.documentElement.style.setProperty("--color","rgb(207,215,225)")
-    document.documentElement.style.setProperty("--bg-color","rgb(46, 54, 71)")
-  }
-  else{
-    document.documentElement.style.setProperty("--color","rgb(64,64,64)")
-    document.documentElement.style.setProperty("--bg-color","rgba(255, 255, 255, 0.952)")
-  }
+  // if(currentTheme.value === "black"){
+  //   document.documentElement.style.setProperty("--color","rgb(207,215,225)")
+  //   document.documentElement.style.setProperty("--bg-color","rgb(46, 54, 71)")
+  // }
+  // else{
+  //   document.documentElement.style.setProperty("--color","rgb(64,64,64)")
+  //   document.documentElement.style.setProperty("--bg-color","rgba(255, 255, 255, 0.952)")
+  // }
 };
 </script>
 <style lang="scss">
@@ -91,7 +100,7 @@ button{
   height: 50px;
   margin-left: 1200px;
 }
-.top--class{
+.top-class{
   position: inherit;
   margin-top: -60px;
   align-items: baseline;
@@ -105,7 +114,7 @@ button{
     width: 300%;
   }
 }
-.header--class {
+.header-class {
   position: relative;
   display: flex;
   top: 35px;
