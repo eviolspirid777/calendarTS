@@ -31,8 +31,7 @@
 
 <script lang="ts" setup>
 import _ from "lodash";
-
-import { watch, ref, type PropType, type Ref } from 'vue';
+import { watch, ref, onMounted } from 'vue';
 import { useDaysStore } from '@/stores/daysStore';
 
 const props = defineProps({
@@ -46,22 +45,27 @@ const props = defineProps({
 const store = useDaysStore();
 
 const currentTheme = ref(props.theme);
-const month = ref(store.currentMonth);
+const month = ref(store.MONTHS_LABELS[store.currentMonth]);
+const days = ref(store.dictionary[store.currentMonth]);
 
-const days = ref(store.dictionary[store.currentMonthIndex]);
+onMounted(() => {
+    if(localStorage.month){
+        month.value = localStorage.month
+        days.value = JSON.parse(localStorage.getItem('days'))
+    }
+  }
+)
 
 watch(() => props.theme, (newVal) => {
     currentTheme.value = newVal;
 });
 
-watch(month, (newMonth: any) => {
-    month.value = newMonth;
+watch(() => store.currentMonth, (newMonth) => {
+    days.value = _.get(store.dictionary, newMonth)
+    month.value = store.MONTHS_LABELS[newMonth]
+    localStorage.setItem('days', JSON.stringify(_.get(store.dictionary, newMonth)))
+    localStorage.month = store.MONTHS_LABELS[newMonth]
 })
-
-// watch(() => props.month, (newVal:string) => {
-//   mnth.value = newVal;
-//   days.value = _.get(store.dictionary, newVal);
-// });
 </script>
 
 <style scoped lang="scss">

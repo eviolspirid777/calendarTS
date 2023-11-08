@@ -1,20 +1,16 @@
 <template>
-    <span @click="selectedTag(0)">Март</span>
-    <span @click="selectedTag(1)">Апрель</span>
-    <span @click="selectedTag(2)">Май</span>
+  <span @click="selectedTag(store.MONTHS.MARCH)">Март</span>
+  <span @click="selectedTag(store.MONTHS.APRIL)">Апрель</span>
+  <span @click="selectedTag(store.MONTHS.MAY)">Май</span>
 </template>
 <script setup lang="ts">
-import {ref} from "vue"
 import { useDaysStore } from "../stores/daysStore"
 
 let store = useDaysStore()
 
-const selectedTag = (tag: number) => {
-  console.log("было:")
-  console.log(store.currentMonth)
-  store.currentMonth = store.MONTHS_LABELS[tag]
-  console.log("сейчас:")
-  console.log(store.currentMonth)
+const selectedTag = (month: number) => {
+  store.currentMonth = month
+  localStorage.month = month
 }
 </script>
 <style lang="scss" scoped>

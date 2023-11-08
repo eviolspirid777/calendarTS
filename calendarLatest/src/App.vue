@@ -27,13 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import OwnCalendar from '@/components/OwnCalendar.vue'
 import OwnSpan from '@/assets/OwnSpan.vue';
 import OwnSwitcher from './assets/OwnSwitcher.vue';
 
 const currentTheme = ref("black");
-
 
 const themeStyle = computed(() => {
   if(currentTheme.value === "black"){
@@ -42,7 +41,6 @@ const themeStyle = computed(() => {
       "--bg-color": "rgb(46, 54, 71)"
     }
   }
-
   return {
     "--color": "rgb(64,64,64)",
     "--bg-color": "rgba(255, 255, 255, 0.952)"
@@ -51,14 +49,6 @@ const themeStyle = computed(() => {
 
 const changeColor = () => {
   currentTheme.value =  currentTheme.value == "black" ? "light" : "black";
-  // if(currentTheme.value === "black"){
-  //   document.documentElement.style.setProperty("--color","rgb(207,215,225)")
-  //   document.documentElement.style.setProperty("--bg-color","rgb(46, 54, 71)")
-  // }
-  // else{
-  //   document.documentElement.style.setProperty("--color","rgb(64,64,64)")
-  //   document.documentElement.style.setProperty("--bg-color","rgba(255, 255, 255, 0.952)")
-  // }
 };
 </script>
 <style lang="scss">
@@ -80,7 +70,7 @@ header{
   font-size: 25px;
 }
 img[src*="calendar_photo"]{
-  height: 405px;
+  height: 423px;
   width: 600px;
   float: left;
   margin-top: 0px;

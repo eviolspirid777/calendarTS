@@ -134,16 +134,14 @@ export const useDaysStore = defineStore("daysStore", () => {
         {day:"5",active:false},
         {day:"6",active:false}      
     ]
-}
+  }
 
-  const currentMonthIndex = ref(MONTHS.MARCH);
-  const currentMonth = ref(MONTHS_LABELS[MONTHS.MARCH]);
+  const currentMonth = ref(MONTHS.MARCH);
   
   return {
     dictionary,
     MONTHS,
     MONTHS_LABELS,
-    currentMonth,
-    currentMonthIndex
+    currentMonth
   }
 })
