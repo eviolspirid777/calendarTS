@@ -31,15 +31,15 @@
 
 <script lang="ts" setup>
 import _ from "lodash";
-import { watch, ref, onMounted } from 'vue';
+import { watch, ref, onMounted, computed } from 'vue';
 import { useDaysStore } from '@/stores/daysStore';
 
 const props = defineProps({
-    theme: {
-        type: String,
-        required: false,
-        default:"light"
-    },
+  theme: {
+    type: String,
+    required: false,
+    default:"light"
+  },
 })
 
 const store = useDaysStore();
@@ -49,22 +49,22 @@ const month = ref(store.MONTHS_LABELS[store.currentMonth]);
 const days = ref(store.dictionary[store.currentMonth]);
 
 onMounted(() => {
-    if(localStorage.month){
-        month.value = localStorage.month
-        days.value = JSON.parse(localStorage.getItem('days'))
-    }
+    if(localStorage.length !== 0){
+      month.value = localStorage.month
+      days.value = JSON.parse(localStorage.getItem('days'))
+    } 
   }
 )
 
 watch(() => props.theme, (newVal) => {
-    currentTheme.value = newVal;
+  currentTheme.value = newVal;
 });
 
 watch(() => store.currentMonth, (newMonth) => {
-    days.value = _.get(store.dictionary, newMonth)
-    month.value = store.MONTHS_LABELS[newMonth]
-    localStorage.setItem('days', JSON.stringify(_.get(store.dictionary, newMonth)))
-    localStorage.month = store.MONTHS_LABELS[newMonth]
+  days.value = _.get(store.dictionary, newMonth)
+  month.value = store.MONTHS_LABELS[newMonth]
+  localStorage.setItem('days', JSON.stringify(_.get(store.dictionary, newMonth)))
+  localStorage.month = month.value
 })
 </script>
 

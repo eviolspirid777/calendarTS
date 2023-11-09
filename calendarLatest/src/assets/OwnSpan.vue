@@ -1,19 +1,35 @@
 <template>
-  <span @click="selectedTag(store.MONTHS.MARCH)">Март</span>
-  <span @click="selectedTag(store.MONTHS.APRIL)">Апрель</span>
-  <span @click="selectedTag(store.MONTHS.MAY)">Май</span>
+  <span :class="{'selected': isCurrentMonth(store.MONTHS.MARCH)}" @click="selectedTag(store.MONTHS.MARCH)">Март</span>
+  <span :class="{'selected': isCurrentMonth(store.MONTHS.APRIL)}" @click="selectedTag(store.MONTHS.APRIL)">Апрель</span>
+  <span :class="{'selected': isCurrentMonth(store.MONTHS.MAY)}" @click="selectedTag(store.MONTHS.MAY)">Май</span>
 </template>
+
 <script setup lang="ts">
 import { useDaysStore } from "../stores/daysStore"
+import { onMounted } from "vue"
 
 let store = useDaysStore()
 
 const selectedTag = (month: number) => {
   store.currentMonth = month
-  localStorage.month = month
+  localStorage.monthId = store.currentMonth
+}
+
+onMounted(() => {
+  if (localStorage.monthId) {
+    store.currentMonth = Number(localStorage.monthId)
+  }
+})
+
+const isCurrentMonth = (month: number) => {
+  return store.currentMonth === month
 }
 </script>
+
 <style lang="scss" scoped>
+.selected{
+  color: rgba(103, 78, 216, 0.7);
+}
 span{
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   text-decoration: underline;

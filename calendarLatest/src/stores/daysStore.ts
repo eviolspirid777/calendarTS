@@ -1,5 +1,4 @@
 import {defineStore} from "pinia"
-
 import {ref} from "vue";
 
 export const useDaysStore = defineStore("daysStore", () => {
@@ -135,8 +134,8 @@ export const useDaysStore = defineStore("daysStore", () => {
         {day:"6",active:false}      
     ]
   }
-
-  const currentMonth = ref(MONTHS.MARCH);
+  
+  const currentMonth = ref(localStorage.monthId ? Number(localStorage.monthId) : MONTHS.MARCH);
   
   return {
     dictionary,
