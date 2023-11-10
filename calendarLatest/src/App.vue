@@ -70,7 +70,7 @@ header{
   font-size: 25px;
 }
 img[src*="calendar_photo"]{
-  height: 423px;
+  height: 433px;
   width: 600px;
   float: left;
   margin-top: 0px;
