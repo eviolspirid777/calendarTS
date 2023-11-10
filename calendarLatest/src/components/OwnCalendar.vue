@@ -50,7 +50,7 @@ const days = ref(store.dictionary[store.currentMonth]);
 
 onMounted(() => {
     if(localStorage.length !== 0){
-      month.value = localStorage.month
+      month.value = store.MONTHS_LABELS[localStorage.monthId]
       days.value = store.dictionary[localStorage.monthId]
     } 
   }
@@ -63,7 +63,6 @@ watch(() => props.theme, (newVal) => {
 watch(() => store.currentMonth, (newMonth) => {
   days.value = _.get(store.dictionary, newMonth)
   month.value = store.MONTHS_LABELS[newMonth]
-  localStorage.month = month.value
 })
 </script>
 
