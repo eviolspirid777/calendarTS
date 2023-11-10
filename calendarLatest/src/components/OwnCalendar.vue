@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import _ from "lodash";
-import { watch, ref, onMounted, computed } from 'vue';
+import { watch, ref, onMounted } from 'vue';
 import { useDaysStore } from '@/stores/daysStore';
 
 const props = defineProps({
@@ -51,7 +51,7 @@ const days = ref(store.dictionary[store.currentMonth]);
 onMounted(() => {
     if(localStorage.length !== 0){
       month.value = localStorage.month
-      days.value = JSON.parse(localStorage.getItem('days'))
+      days.value = store.dictionary[localStorage.monthId]
     } 
   }
 )
@@ -63,7 +63,6 @@ watch(() => props.theme, (newVal) => {
 watch(() => store.currentMonth, (newMonth) => {
   days.value = _.get(store.dictionary, newMonth)
   month.value = store.MONTHS_LABELS[newMonth]
-  localStorage.setItem('days', JSON.stringify(_.get(store.dictionary, newMonth)))
   localStorage.month = month.value
 })
 </script>
