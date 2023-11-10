@@ -31,8 +31,9 @@
 
 <script lang="ts" setup>
 import _ from "lodash";
-import { watch, ref, onMounted } from 'vue';
+import { watch, ref, onMounted, type Ref } from 'vue';
 import { useDaysStore } from '@/stores/daysStore';
+import type { Day } from "@/types/OwnDays";
 
 const props = defineProps({
   theme: {
@@ -44,9 +45,9 @@ const props = defineProps({
 
 const store = useDaysStore();
 
-const currentTheme = ref(props.theme);
-const month = ref(store.MONTHS_LABELS[store.currentMonth]);
-const days = ref(store.dictionary[store.currentMonth]);
+const currentTheme: Ref<String> = ref(props.theme);
+const month: Ref<String> = ref(store.MONTHS_LABELS[store.currentMonth]);
+const days: Ref<Day[]> = ref(store.dictionary[store.currentMonth]);
 
 onMounted(() => {
     if(localStorage.length !== 0){

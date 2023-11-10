@@ -21,7 +21,7 @@ onMounted(() => {
   }
 })
 
-const isCurrentMonth = (month: number) => {
+const isCurrentMonth = (month: number): boolean => {
   return store.currentMonth === month
 }
 </script>

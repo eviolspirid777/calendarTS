@@ -27,12 +27,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, type Ref } from 'vue';
 import OwnCalendar from '@/components/OwnCalendar.vue'
 import OwnSpan from '@/assets/OwnSpan.vue';
 import OwnSwitcher from './assets/OwnSwitcher.vue';
 
-const currentTheme = ref("black");
+const currentTheme: Ref<String> = ref("black");
 
 const themeStyle = computed(() => {
   if(currentTheme.value === "black"){
