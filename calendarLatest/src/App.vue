@@ -47,7 +47,7 @@ const themeStyle = computed(() => {
   }
 })
 
-const changeColor = () => {
+const changeColor = (): void => {
   currentTheme.value =  currentTheme.value == "black" ? "light" : "black";
 };
 </script>

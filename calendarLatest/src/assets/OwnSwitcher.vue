@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 const emits = defineEmits(["change-color"]);
 
-const changeColor = () => {
+const changeColor = (): void => {
   emits("change-color");
 }
 </script>

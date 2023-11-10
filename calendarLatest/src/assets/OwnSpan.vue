@@ -10,7 +10,7 @@ import { onMounted } from "vue"
 
 let store = useDaysStore()
 
-const selectedTag = (month: number) => {
+const selectedTag = (month: number): void => {
   store.currentMonth = month
   localStorage.monthId = store.currentMonth
 }
@@ -21,9 +21,7 @@ onMounted(() => {
   }
 })
 
-const isCurrentMonth = (month: number): boolean => {
-  return store.currentMonth === month
-}
+const isCurrentMonth = (month: number): boolean => store.currentMonth === month
 </script>
 
 <style lang="scss" scoped>
