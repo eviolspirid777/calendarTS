@@ -128,8 +128,9 @@ button{
   & h1 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     margin-left: 20px;
-    padding-bottom: 10px;
     font-size: 47px;
+    align-content: center;
+    justify-content: center;
   }
   & .pink {
     background-color: rgb(228, 72, 116);
